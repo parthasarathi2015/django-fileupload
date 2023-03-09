@@ -1,0 +1,41 @@
+
+{% block content %}
+    <h1>Document 
+        {% if fname %}
+    :: {{fname}} 
+        {% endif %}
+    </h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if not doc_content.empty %}
+    <ul>
+        <table width="50%" cellpadding="0" spacing="1" border="1" bgcolor="#ffffff" align="center">        
+            <tr>
+                {% for col in doc_content.columns %}
+                <td>
+                    <b>{{col}}</b>
+                </td>
+                {% endfor %}
+            </tr>
+                {% for index, row in doc_content.iterrows %}
+                <tr>
+                    {% for cell in row %}
+                    <td>
+                        {{cell}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+    </table>
+    </ul>
+    {% else %}
+    <p>There are no File uploaded.</p>
+    {% endif %}
+    <p><a href="{% url 'home' %}">Return to Home</a></p>
+    <p><a href="{% url 'listing' %}">Return to Listing page</a></p>
+{% endblock %}

@@ -1,0 +1,35 @@
+
+{% block content %}
+  <h1>Document List</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  {% if object_list %}
+  <ul>
+    <table width="60%" cellpadding="0" cellspacing="1" border="1" class="" bgcolor="#ffffff" align="center">
+        <tr>
+            <th>Serial No</th><th>Description</th><th>File</th><th>Action</th>
+        </tr>
+        {% for document in object_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ document.description }}</td>
+                <td>{{document.document}}</td>
+                <td>
+                    <div><button><a href="{{document.document.url}}" download="">Download:{{document.id}}</a></button></div>
+                    <div><button><a href="{% url 'listing-detail' document.id %}" >Open</a></button></div>
+                
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+  </ul>
+  {% else %}
+    <p>There are no File uploaded.</p>
+  {% endif %}
+  <p><a href="{% url 'home' %}">Return to home</a></p>
+{% endblock %}
